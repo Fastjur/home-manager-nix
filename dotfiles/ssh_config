@@ -1,0 +1,45 @@
+Host *
+        IdentityAgent ~/.1password/agent.sock
+
+Host daedalus
+        User jurriaan
+        Hostname 192.168.1.15
+
+Host odyssey
+        User root
+        Hostname 5.39.188.166
+
+Host plexmediaserver
+        User root
+        Hostname 192.168.10.20
+        ProxyJump odyssey
+
+Host cloudflare-tunnel
+        User root
+        Hostname 192.168.10.10
+        ProxyJump odyssey
+
+Host dockge
+        User root
+        Hostname 192.168.10.21
+        ProxyJump odyssey
+
+Host nfs-smb
+        User root
+        Hostname 192.168.10.30
+        ProxyJump odyssey
+
+Host wessel-vm
+        User wessel
+        Hostname 192.168.10.45
+        ProxyJump wessel@5.39.188.166:22
+
+Host wireguard
+        User root
+        Hostname 192.168.10.22
+        ProxyJump odyssey
+
+Host ollama
+        User root
+        Hostname 192.168.10.106
+        ProxyJump odyssey

@@ -1,0 +1,46 @@
+[init]
+	defaultBranch = main
+[core]
+	editor = vim
+	autocrlf = input
+	excludesFile = ~/.gitignore
+[alias]
+	conflicts = diff --name-only --diff-filter=U
+	delete-squashed = "!f() { local targetBranch=${1:-master} && git checkout -q $targetBranch && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=$(git merge-base $targetBranch $branch) && [[ $(git cherry $targetBranch $(git commit-tree $(git rev-parse $branch^{tree}) -p $mergeBase -m _)) == \"-\"* ]] && git branch -D $branch; done; }; f"
+[url "git@gitlab.com:"]
+	insteadOf = https://gitlab.com/
+[user]
+	name = Jurriaan Den Toonder
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP6TgyxNZlbfxhZWIR9saKsFjp96+o9iQ5sr5bK1zN0P
+	email = 1493561+Fastjur@users.noreply.github.com
+[gpg]
+	format = ssh
+[gpg "ssh"]
+  program = "/opt/1Password/op-ssh-sign"
+[commit]
+	gpgsign = true
+[pull]
+	ff = only
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[submodule]
+	recurse = true
+[push]
+	autoSetupRemote = true
+[merge]
+	conflictStyle = zdiff3
+[rerere]
+	enabled = true
+[help]
+	autocorrect = 10
+# [includeIf "gitdir:~/git/gh/"]
+# 	path = .gitconfig-gh
+# [includeIf "gitdir:~/git/gl/"]
+# 	path = .gitconfig-gl
+# [includeIf "gitdir:~/git/coolblue/"]
+# 	path = .gitconfig-coolblue
+[rebase]
+	autoStash = true
