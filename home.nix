@@ -93,6 +93,9 @@ in
     protonplus # Utility for managing proton installations (into steam compat folder)
     gamemode # Allows usage of `gamemoderun` utility as launch parameter in steam
 
+    # Fonts
+    nerd-fonts.meslo-lg # Required for Powerlevel10k theme
+
     # Miscellaneous
     neofetch
     nixfmt
@@ -143,6 +146,28 @@ in
 
   programs.zsh = {
     enable = true;
+
+    # Oh My Zsh
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "docker"
+      ];
+    };
+
+    # Powerlevel10k theme (loaded as a zsh plugin since it's not a built-in oh-my-zsh theme)
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+    ];
+
+    # Fish-like autosuggestions and syntax highlighting
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
   };
 
   programs.git = {
