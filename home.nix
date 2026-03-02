@@ -117,6 +117,7 @@ in
     ".ssh/config".source = ./dotfiles/ssh_config;
     ".gitconfig".source = ./dotfiles/.gitconfig;
     ".gitignore".source = ./dotfiles/global_gitignore;
+    ".p10k.zsh".source = ./dotfiles/.p10k.zsh;
   };
 
   # Home Manager can also manage your environment variables through
@@ -180,6 +181,25 @@ in
     # Fish-like autosuggestions and syntax highlighting
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+
+    # Extra shell init (NVM, Powerlevel10k)
+    initContent = ''
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+    '';
+  };
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      font = {
+        normal = {
+          family = "MesloLGS Nerd Font";
+          style = "Regular";
+        };
+        size = 11;
+      };
+    };
   };
 
   programs.git = {
