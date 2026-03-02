@@ -1,27 +1,46 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   # Define a helper function to create Chromium web apps
   # This avoids repeating the long Exec line for every app
-  makeWebApp = { name, id, url, wmClass, icon ? "chromium"}: {
-    name = name;
-    genericName = "Web App";
-    comment = "Open ${name} in Chromium";
-    
-    # We use a distinct user-data-dir for each app so cookies/sessions are isolated
-    exec = "${pkgs.chromium}/bin/chromium --app=${url} --user-data-dir=${config.home.homeDirectory}/.config/chromium-cwa/${id}";
-    
-    terminal = false;
-    icon = icon;
-    categories = [ "Network" "WebBrowser" ];
-    mimeType = [ "text/html" "text/xml" ];
+  makeWebApp =
+    {
+      name,
+      id,
+      url,
+      wmClass,
+      icon ? "chromium",
+    }:
+    {
+      name = name;
+      genericName = "Web App";
+      comment = "Open ${name} in Chromium";
 
-    startupNotify = true;
-    # This is needed to ensure the app gets its own taskbar entry and doesn't group with regular Chromium windows
-    settings = {
-      "StartupWMClass" = wmClass;
+      # We use a distinct user-data-dir for each app so cookies/sessions are isolated
+      exec = "${pkgs.chromium}/bin/chromium --app=${url} --user-data-dir=${config.home.homeDirectory}/.config/chromium-cwa/${id}";
+
+      terminal = false;
+      icon = icon;
+      categories = [
+        "Network"
+        "WebBrowser"
+      ];
+      mimeType = [
+        "text/html"
+        "text/xml"
+      ];
+
+      startupNotify = true;
+      # This is needed to ensure the app gets its own taskbar entry and doesn't group with regular Chromium windows
+      settings = {
+        "StartupWMClass" = wmClass;
+      };
     };
-  };
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -61,7 +80,7 @@ in
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    
+
     # 'Common' desktop applications
     telegram-desktop
     spotify
@@ -150,14 +169,13 @@ in
   # Desktop Entries #
   ###################
 
-  xdg.desktopEntries = {
-    whatsapp = makeWebApp {
-      name = "WhatsApp Web";
-      id = "whatsapp";
-      wmClass = "chrome-web.whatsapp.com__-Default"; # This is the WM_CLASS for the WhatsApp web app, needed to ensure it gets its own taskbar entry and correct icon.
-      url = "https://web.whatsapp.com";
-      icon = ./icons/whatsapp.png;
-    };
-  };
+  # xdg.desktopEntries = {
+  #   whatsapp = makeWebApp {
+  #     name = "WhatsApp Web";
+  #     id = "whatsapp";
+  #     wmClass = "chrome-web.whatsapp.com__-Default"; # This is the WM_CLASS for the WhatsApp web app, needed to ensure it gets its own taskbar entry and correct icon.
+  #     url = "https://web.whatsapp.com";
+  #     icon = ./icons/whatsapp.png;
+  #   };
+  # };
 }
-
