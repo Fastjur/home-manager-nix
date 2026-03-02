@@ -136,11 +136,23 @@ in
   #  /etc/profiles/per-user/jurriaan/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "vim";
+    NVM_DIR = "${config.home.homeDirectory}/.nvm";
   };
+
+  home.sessionPath = [
+    "${config.home.homeDirectory}/.opencode/bin"
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  programs.bash = {
+    enable = true;
+    shellAliases = {
+      ls = "ls --color=auto";
+    };
+  };
 
   programs.discord.enable = true;
 
