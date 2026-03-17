@@ -240,6 +240,10 @@ in
     enable = true;
   };
 
+  programs.obsidian = {
+    enable = true;
+  };
+
   # HUD utility for fps etc in games
   programs.mangohud = {
     enable = true;
