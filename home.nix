@@ -6,6 +6,14 @@
 }:
 
 let
+  # Oh my tmux! configuration (pinned to a specific commit for reproducibility)
+  oh-my-tmux = pkgs.fetchFromGitHub {
+    owner = "gpakosz";
+    repo = ".tmux";
+    rev = "af33f07134b76134acca9d01eacbdecca9c9cda6";
+    sha256 = "0q38l78wh781f8bzrjb9x7w37a3s61xy0k74cnq89qbwi7mvlycx";
+  };
+
   # Define a helper function to create Chromium web apps
   # This avoids repeating the long Exec line for every app
   makeWebApp =
@@ -87,6 +95,7 @@ in
     veracrypt
 
     # Common utils
+    tmux
     rsync
 
     # Gaming utils
@@ -118,6 +127,10 @@ in
     ".gitconfig".source = ./dotfiles/.gitconfig;
     ".gitignore".source = ./dotfiles/global_gitignore;
     ".p10k.zsh".source = ./dotfiles/.p10k.zsh;
+
+    # Oh my tmux! (note: no leading '.' when using ~/.config/tmux/ location)
+    ".config/tmux/tmux.conf".source = "${oh-my-tmux}/.tmux.conf";
+    ".config/tmux/tmux.conf.local".source = ./dotfiles/tmux.conf.local;
   };
 
   # Home Manager can also manage your environment variables through
