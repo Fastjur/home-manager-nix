@@ -217,6 +217,14 @@ in
     };
   };
 
+  programs.kitty = {
+    enable = true;
+    # settings = {
+    #   fontSize = 11;
+    #   fontFamily = "MesloLGS Nerd Font";
+    # };
+  };
+
   programs.git = {
     enable = true;
   };
