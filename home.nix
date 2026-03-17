@@ -97,6 +97,8 @@ in
     # Common utils
     tmux
     rsync
+    ffmpeg
+    handbrake
 
     # Gaming utils
     protonplus # Utility for managing proton installations (into steam compat folder)
