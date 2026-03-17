@@ -269,4 +269,13 @@ in
   #     icon = ./icons/whatsapp.png;
   #   };
   # };
+
+  home.activation = {
+    updateKdeCache = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      # Rebuild KDE Plasma 6 application cache so new apps show up
+      if command -v kbuildsycoca6 >/dev/null 2>&1; then
+        $DRY_RUN_CMD kbuildsycoca6 --noincremental || true
+      fi
+    '';
+  };
 }
