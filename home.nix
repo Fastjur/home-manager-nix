@@ -197,6 +197,13 @@ in
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
+    profileExtra = ''
+      # Source Debian's system-wide profile to grab Flatpak paths and other system variables
+      if [ -f /etc/profile ]; then
+        emulate sh -c '. /etc/profile'
+      fi
+    '';
+
     # Extra shell init (NVM, Powerlevel10k)
     initContent = ''
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
